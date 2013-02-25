@@ -36,7 +36,7 @@ def get_ts(ip, logfile,initial_time):
 		return
 	rtt = (ans.time-p1.time)*1000# ms
 	#remote_ts = ans.ts_ori
-	remote_ts = ans.ts_rx #millisecondi da mezzanotte
+	remote_ts = ans.ts_tx #millisecondi da mezzanotte
 	local_ts = float(datetime.now().strftime('%s.%f'))*1000 #ms
 	#if not initial_time['remote']:
 	if not initial_time['remote']:
