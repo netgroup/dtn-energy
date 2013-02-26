@@ -9,10 +9,10 @@ import os
 
 filename = 'lg_p500_scarica_ntp5_mod.txt'#150.6 not charge
 filename2 = 'galaxy_s2_1.txt'
-filename3='galaxy_s2_2'
+filename3='galaxy_s2_2.txt'
 addresses = [#TODO impostare ip e mac 
 	{'ip': '192.168.150.9', 'mac':'5D:DA:D4:69:05:0F'},
-        {'ip': '192.168.150.6', 'mac':'98:0C:82:7E:46:2B'},
+        {'ip': '192.168.150.7', 'mac':'98:0C:82:7E:46:2B'},
 	{'ip': '192.168.150.3', 'mac':'98:0C:82:7E:73:79'}
 ]
 #impostare maschera
@@ -22,7 +22,7 @@ initial_time={'remote':None,'local':None}
 initial_time2={'remote':None,'local':None}
 initial_time3={'remote':None,'local':None}
 
-def get_ts(ip, logfile,initial_time):
+def get_ts(ip, log,initial_time):
 	
 	''' get ip address and name of the file
 	I will write on the file a string formatted as follow:
@@ -32,7 +32,7 @@ def get_ts(ip, logfile,initial_time):
 	ans = sr1(p1, timeout=5)
 	if not ans:
 		return
-	if logfile==None:
+	if log==None: 
 		return
 	rtt = (ans.time-p1.time)*1000# ms
 	#remote_ts = ans.ts_ori
@@ -45,9 +45,9 @@ def get_ts(ip, logfile,initial_time):
 	if (remote_ts-initial_time['remote'])<0:#in questo modo evito che a mezzanotte ans.ts_ori riparte da 0
                 remote_ts+=86400000
 	skew = (remote_ts - initial_time['remote']) - (local_ts-initial_time['local'] ) 
-	if logfile:
-		logfile.write('%f\t%f\t%d\t%d\t%f\n' % (local_ts, rtt, remote_ts ,skew, local_ts-initial_time['local'] ) )
-		logfile.flush()
+	if log:
+		log.write('%f\t%f\t%d\t%d\t%f\n' % (local_ts, rtt, remote_ts ,skew, local_ts-initial_time['local'] ) )
+		log.flush()
 
 	
 	
@@ -71,25 +71,36 @@ def main():
 			#	get_ts(a['ip'],logfile2, initial_time1503)
 			#get_ts(a['ip'],None)
 			if a['ip']=='192.168.150.9' :
-				temp=initial_time
-				log=logfile
-			if a['ip']=='192.168.150.6' :
-				temp=initial_time2
-				log=logfile2
+				#temp=initial_time
+				#log=logfile
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],logfile,initial_time)
+			
+			if a['ip']=='192.168.150.7' :
+				#temp=initial_time2
+				#log=logfile2
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],logfile2,initial_time2)
 			if a['ip']=='192.168.150.3' :
-				temp=initial_time3
-				log=logfile3
-			get_ts(a['ip'],None)
-			get_ts(a['ip'],None)
-			get_ts(a['ip'],None)
-			get_ts(a['ip'],None)
-			get_ts(a['ip'],log,temp)
-					
+				#temp=initial_time3
+				#log=logfile3
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],None,None)
+				get_ts(a['ip'],logfile3,initial_time3)	
 			#get_ts(a.ts,ip None)	
 		#	sleep(5)
 		sleep(300)# ogni 5 minuti   mi sveglio 
 	logfile.close()
-	#logfile2.close()
+	logfile2.close()
+	logfile3.close()
 
 if __name__ == '__main__':
 	main()
