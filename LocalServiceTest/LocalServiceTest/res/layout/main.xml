@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<Button android:id="@+id/Button01" android:layout_height="wrap_content"
+		android:onClick="startLocalService" android:layout_width="fill_parent"
+		android:text="@string/start_label">
+	</Button>
+	<Button android:id="@+id/Button02" android:layout_height="wrap_content"
+		android:onClick="stopLocalService" android:text="@string/stop_label"
+		android:layout_width="fill_parent">
+	</Button>
+</LinearLayout>
